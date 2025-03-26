@@ -7,14 +7,14 @@
       "CheatingAttempts": 5
     },
     {
-      "exameName": "Javascript",
+      "exameName": "Javascript2",
       "numQuestions": 20,
       "shuffleOptions": true,
       "timeLimit": 180,
       "CheatingAttempts": 2
     },
     {
-      "exameName": "Node",
+      "exameName": "Node2",
       "numQuestions": 10,
       "shuffleOptions": false,
       "timeLimit": 180,
