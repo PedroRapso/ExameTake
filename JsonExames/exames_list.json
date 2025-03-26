@@ -1,0 +1,23 @@
+[
+    {
+      "exameName": "TeachLead",
+      "numQuestions": 50,
+      "shuffleOptions": false,
+      "timeLimit": 180,
+      "CheatingAttempts": 5
+    },
+    {
+      "exameName": "Javascript",
+      "numQuestions": 20,
+      "shuffleOptions": true,
+      "timeLimit": 180,
+      "CheatingAttempts": 2
+    },
+    {
+      "exameName": "Node",
+      "numQuestions": 10,
+      "shuffleOptions": false,
+      "timeLimit": 180,
+      "CheatingAttempts": 5
+    }
+  ]

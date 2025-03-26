@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Select Quiz Parameters</h1>
+        <form id="quiz-form">
+            <label for="exameName">Choose Exam:</label>
+            <select id="exameName" name="exameName">
+                <!-- Options will be dynamically populated using JavaScript -->
+            </select>
+
+            <label for="numQuestions">Number of Questions:</label>
+            <input type="number" id="numQuestions" name="numQuestions" value="10">
+
+            <label for="shuffleOptions">Shuffle Options:</label>
+            <select id="shuffleOptions" name="shuffleOptions">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+            </select>
+
+            <label for="timeLimit">Time Limit (minutes):</label>
+            <input type="number" id="timeLimit" name="timeLimit" value="5">
+
+            <label for="CheatingAttempts">Cheating Attempts Allowed:</label>
+            <input type="number" id="CheatingAttempts" name="CheatingAttempts" value="3">
+
+            <button type="button" onclick="takeExam()">Take Exam</button>
+        </form>
+    </div>
+    <script>
+        async function populateExamNames() {
+            try {
+                const response = await fetch('JsonExames/exames_list.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const examList = await response.json();
+                const selectElement = document.getElementById('exameName');
+
+                examList.forEach(exam => {
+                    const option = document.createElement('option');
+                    option.value = exam.exameName;
+                    option.textContent = exam.exameName;
+                    selectElement.appendChild(option);
+                });
+
+                // Set the default values for the other fields.
+                const firstExam = examList[0];
+                if(firstExam){
+                  document.getElementById('numQuestions').value = firstExam.numQuestions;
+                  document.getElementById('shuffleOptions').value = firstExam.shuffleOptions;
+                  document.getElementById('timeLimit').value = firstExam.timeLimit;
+                  document.getElementById('CheatingAttempts').value = firstExam.CheatingAttempts;
+                }
+
+                document.getElementById('exameName').addEventListener('change', function() {
+                  const selectedExameName = this.value;
+                  const exam = examList.find(exame => exame.exameName === selectedExameName);
+
+                    document.getElementById('numQuestions').value = exam.numQuestions;
+                    document.getElementById('shuffleOptions').value = exam.shuffleOptions;
+                    document.getElementById('timeLimit').value = exam.timeLimit;
+                    document.getElementById('CheatingAttempts').value = exam.CheatingAttempts;
+                });
+            } catch (error) {
+                console.error('Error loading exam list:', error);
+            }
+        }
+
+        function takeExam() {
+            const form = document.getElementById('quiz-form');
+            const exameName = form.exameName.value;
+            const numQuestions = form.numQuestions.value;
+            const shuffleOptions = form.shuffleOptions.value;
+            const timeLimit = form.timeLimit.value;
+            const CheatingAttempts = form.CheatingAttempts.value;
+
+            const url = `exametake.html?exameName=${exameName}&numQuestions=${numQuestions}&shuffleOptions=${shuffleOptions}&timeLimit=${timeLimit}&CheatingAttempts=${CheatingAttempts}`;
+
+            window.location.href = url;
+        }
+
+        // Call the function to populate exam names
+        populateExamNames();
+    </script>
+</body>
+</html>
